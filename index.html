@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix code rain</title>
+    <style>
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+      
+        canvas {
+          display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+</body>
+</html>
+
+<script>
+    const canvas = document.getElementById("matrix");
+
+    const canvasContext = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = ["日","ﾊ","ﾐ","ﾋ","ｰ","ｳ","ｼ","ﾅ","ﾓ","ﾆ","ｻ","ﾜ","ﾂ","ｵ","ﾘ","ｱ","ﾎ","ﾃ","ﾏ","ｹ","ﾒ","ｴ","ｶ","ｷ","ﾑ","ﾕ","ﾗ","ｾ","ﾈ","ｽ","ﾀ","ﾇ","ﾍ",":","・",".","=","*","+","-","<",">","¦","｜","ﾘ"];
+
+    const fontSize = 18;
+
+    const columns = canvas.width / fontSize;
+
+    const drops = new Array(Math.floor(columns)).fill(1);
+
+    function draw() {
+        canvasContext.fillStyle = "rgba(0, 0, 0, 0.05)";
+        canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+
+        canvasContext.fillStyle = "#0F0";
+        canvasContext.font = `${fontSize}px arial`;
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = letters[Math.floor(Math.random() * letters.length)];
+
+            canvasContext.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            if (drops[i] * fontSize > canvas.height && Math.random() > 0.95) {
+                drops[i] = 0;
+            }
+
+            drops[i]++;
+        }
+
+        window.requestAnimationFrame(draw);
+    }
+
+    draw()
+</script>
